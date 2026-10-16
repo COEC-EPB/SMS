@@ -1,146 +1,420 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Teste de SMS</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Envio de SMS</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f3f5f7;
-            margin: 0;
-            padding: 30px;
-        }
 
-        .card {
-            max-width: 450px;
-            margin: 50px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 14px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            margin-top: 0;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 15px;
-        }
-
-        input,
-        textarea {
-            width: 100%;
-            padding: 12px;
-            margin-top: 6px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
+        * {
             box-sizing: border-box;
         }
 
-        textarea {
-            height: 120px;
-            resize: vertical;
+        body {
+
+            margin: 0;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: #f3f5f7;
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
         }
+
+
+        .container {
+
+            width: 100%;
+            max-width: 480px;
+
+        }
+
+
+        .card {
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.10);
+
+        }
+
+
+        h1 {
+
+            margin: 0;
+
+            font-size: 26px;
+
+            color: #222;
+
+        }
+
+
+        .subtitulo {
+
+            margin-top: 8px;
+            margin-bottom: 25px;
+
+            color: #777;
+
+            font-size: 14px;
+
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-top: 18px;
+            margin-bottom: 7px;
+
+            font-weight: bold;
+
+            color: #444;
+
+            font-size: 14px;
+
+        }
+
+
+        input,
+        textarea {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #d5d5d5;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.2s;
+
+        }
+
+
+        input:focus,
+        textarea:focus {
+
+            border-color: #0066cc;
+
+            box-shadow:
+                0 0 0 3px rgba(0, 102, 204, 0.08);
+
+        }
+
+
+        textarea {
+
+            min-height: 130px;
+
+            resize: vertical;
+
+        }
+
+
+        .contador {
+
+            text-align: right;
+
+            font-size: 12px;
+
+            color: #888;
+
+            margin-top: 5px;
+
+        }
+
 
         button {
+
             width: 100%;
+
+            margin-top: 25px;
+
             padding: 14px;
-            margin-top: 20px;
+
             border: none;
-            border-radius: 7px;
+
+            border-radius: 8px;
+
             background: #0066cc;
+
             color: white;
+
             font-size: 16px;
+
+            font-weight: bold;
+
             cursor: pointer;
+
+            transition: 0.2s;
+
         }
+
+
+        button:hover {
+
+            background: #004fa3;
+
+        }
+
 
         button:disabled {
+
+            cursor: not-allowed;
+
             background: #999;
+
         }
+
 
         #resultado {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 7px;
+
             display: none;
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            word-break: break-word;
+
         }
+
 
         .sucesso {
+
             display: block !important;
-            color: #155724;
+
             background: #d4edda;
+
+            border: 1px solid #c3e6cb;
+
+            color: #155724;
+
         }
 
+
         .erro {
+
             display: block !important;
-            color: #721c24;
+
             background: #f8d7da;
+
+            border: 1px solid #f5c6cb;
+
+            color: #721c24;
+
         }
+
+
+        .carregando {
+
+            display: block !important;
+
+            background: #e8f1ff;
+
+            border: 1px solid #b8d4ff;
+
+            color: #004fa3;
+
+        }
+
+
+        .rodape {
+
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #999;
+
+            font-size: 12px;
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-<div class="card">
 
-    <h2>📱 Teste de SMS</h2>
+<div class="container">
 
-    <label>Telefone</label>
 
-    <input
-        id="telefone"
-        type="tel"
-        value="+5583991105959"
-        placeholder="+5583999999999"
-    >
+    <div class="card">
 
-    <label>Mensagem</label>
 
-    <textarea
-        id="mensagem"
-        placeholder="Digite sua mensagem..."
-    >Teste de SMS enviado pelo Cloudflare Worker.</textarea>
+        <h1>📱 Enviar SMS</h1>
 
-    <button id="btnEnviar" onclick="enviarSMS()">
-        Enviar SMS
-    </button>
+        <div class="subtitulo">
+            Teste de envio pelo Cloudflare Worker
+        </div>
 
-    <div id="resultado"></div>
+
+        <!-- TELEFONE -->
+
+        <label for="telefone">
+            Número do telefone
+        </label>
+
+        <input
+            type="tel"
+            id="telefone"
+            value="+5583991105959"
+            placeholder="+5583999999999"
+        >
+
+
+        <!-- MENSAGEM -->
+
+        <label for="mensagem">
+            Mensagem
+        </label>
+
+        <textarea
+            id="mensagem"
+            maxlength="500"
+            placeholder="Digite sua mensagem..."
+            oninput="atualizarContador()"
+        >Teste de SMS enviado pelo Cloudflare Worker.</textarea>
+
+
+        <div class="contador">
+            <span id="contador">0</span>/500 caracteres
+        </div>
+
+
+        <!-- BOTÃO -->
+
+        <button
+            id="btnEnviar"
+            onclick="enviarSMS()"
+        >
+
+            Enviar SMS
+
+        </button>
+
+
+        <!-- RESULTADO -->
+
+        <div id="resultado"></div>
+
+
+    </div>
+
+
+    <div class="rodape">
+        Envio de SMS
+    </div>
+
 
 </div>
 
 
+
 <script>
 
-const WORKER_URL = "https://enviar-sms.pedro-fillype.workers.dev";
+
+/* ===================================================== */
+/* CONFIGURAÇÃO DO WORKER                                */
+/* ===================================================== */
+
+
+const WORKER_URL =
+    "https://enviar-sms.pedro-fillype.workers.dev";
+
+
+
+/* ===================================================== */
+/* CONTADOR                                              */
+/* ===================================================== */
+
+
+function atualizarContador() {
+
+    const mensagem =
+        document.getElementById("mensagem").value;
+
+    document.getElementById("contador").innerText =
+        mensagem.length;
+
+}
+
+
+atualizarContador();
+
+
+
+/* ===================================================== */
+/* ENVIAR SMS                                            */
+/* ===================================================== */
+
 
 async function enviarSMS() {
 
-    const telefone = document
-        .getElementById("telefone")
-        .value
-        .trim();
 
-    const mensagem = document
-        .getElementById("mensagem")
-        .value
-        .trim();
+    const telefone =
+        document
+            .getElementById("telefone")
+            .value
+            .trim();
 
-    const resultado = document.getElementById("resultado");
 
-    const botao = document.getElementById("btnEnviar");
+    const mensagem =
+        document
+            .getElementById("mensagem")
+            .value
+            .trim();
+
+
+    const resultado =
+        document.getElementById("resultado");
+
+
+    const botao =
+        document.getElementById("btnEnviar");
+
+
+
+    /* ================================================= */
+    /* VALIDAÇÕES                                        */
+    /* ================================================= */
 
 
     if (!telefone) {
 
-        resultado.className = "erro";
-        resultado.innerHTML = "Informe o telefone.";
+        mostrarErro(
+            "Informe o número do telefone."
+        );
 
         return;
     }
@@ -148,79 +422,271 @@ async function enviarSMS() {
 
     if (!mensagem) {
 
-        resultado.className = "erro";
-        resultado.innerHTML = "Digite uma mensagem.";
+        mostrarErro(
+            "Digite uma mensagem."
+        );
 
         return;
     }
 
 
+
+    /* ================================================= */
+    /* ENVIO                                             */
+    /* ================================================= */
+
+
     try {
+
 
         botao.disabled = true;
 
-        botao.innerHTML = "Enviando...";
+        botao.innerText =
+            "Enviando...";
 
 
-        const response = await fetch(
-            WORKER_URL + "/api/enviar-sms",
-            {
-                method: "POST",
+        resultado.className =
+            "carregando";
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
 
-                body: JSON.stringify({
-                    telefone: telefone,
-                    mensagem: mensagem
-                })
-            }
+        resultado.innerHTML =
+            "⏳ Enviando SMS...";
+
+
+        console.log(
+            "Enviando SMS para:",
+            telefone
         );
 
 
-        const dados = await response.json();
+
+        const response = await fetch(
+
+            WORKER_URL + "/api/enviar-sms",
+
+            {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    telefone: telefone,
+
+                    mensagem: mensagem
+
+                })
+
+            }
+
+        );
+
+
+
+        /* ================================================= */
+        /* TENTA LER RETORNO                                */
+        /* ================================================= */
+
+
+        let dados;
+
+
+        try {
+
+            dados =
+                await response.json();
+
+        }
+
+        catch {
+
+            throw new Error(
+                "O Worker retornou uma resposta inválida."
+            );
+
+        }
+
+
+
+        console.log(
+            "Resposta do Worker:",
+            dados
+        );
+
+
+
+        /* ================================================= */
+        /* ERRO                                             */
+        /* ================================================= */
 
 
         if (!response.ok) {
 
-            console.error(dados);
+
+            let mensagemErro =
+                "Erro ao enviar SMS.";
+
+
+            if (
+                dados.erro &&
+                typeof dados.erro === "object"
+            ) {
+
+                mensagemErro =
+
+                    dados.erro.message ||
+
+                    dados.erro.error ||
+
+                    JSON.stringify(
+                        dados.erro
+                    );
+
+            }
+
+            else if (dados.erro) {
+
+                mensagemErro =
+                    dados.erro;
+
+            }
+
 
             throw new Error(
-                dados.erro?.message ||
-                dados.erro ||
-                "Erro ao enviar SMS"
+                mensagemErro
             );
+
         }
 
 
-        resultado.className = "sucesso";
+
+        /* ================================================= */
+        /* SUCESSO                                          */
+        /* ================================================= */
+
+
+        resultado.className =
+            "sucesso";
+
 
         resultado.innerHTML =
-            "✅ SMS enviado com sucesso!<br><br>" +
-            "SID: " + dados.sid;
+
+            "✅ <strong>SMS enviado!</strong>" +
+
+            "<br><br>" +
+
+            "Telefone: " +
+            escaparHTML(telefone) +
+
+            "<br>" +
+
+            "Status: " +
+            escaparHTML(dados.status || "enviado") +
+
+            (
+                dados.sid
+
+                ? "<br>SID: " +
+                  escaparHTML(dados.sid)
+
+                : ""
+            );
 
 
-    } catch (erro) {
+    }
 
-        console.error(erro);
+    catch (erro) {
 
-        resultado.className = "erro";
 
-        resultado.innerHTML =
-            "❌ Erro ao enviar SMS:<br>" +
-            erro.message;
+        console.error(
+            "Erro ao enviar SMS:",
+            erro
+        );
 
-    } finally {
+
+        mostrarErro(
+            erro.message
+        );
+
+
+    }
+
+    finally {
+
 
         botao.disabled = false;
 
-        botao.innerHTML = "Enviar SMS";
+        botao.innerText =
+            "Enviar SMS";
+
 
     }
+
+
 }
+
+
+
+/* ===================================================== */
+/* MOSTRAR ERRO                                          */
+/* ===================================================== */
+
+
+function mostrarErro(mensagem) {
+
+
+    const resultado =
+        document.getElementById("resultado");
+
+
+    resultado.className =
+        "erro";
+
+
+    resultado.innerHTML =
+
+        "❌ <strong>Erro</strong>" +
+
+        "<br><br>" +
+
+        escaparHTML(mensagem);
+
+
+}
+
+
+
+/* ===================================================== */
+/* SEGURANÇA HTML                                        */
+/* ===================================================== */
+
+
+function escaparHTML(texto) {
+
+
+    const div =
+        document.createElement("div");
+
+
+    div.textContent =
+        String(texto);
+
+
+    return div.innerHTML;
+
+
+}
+
 
 </script>
 
+
 </body>
+
 </html>
